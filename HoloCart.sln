@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloCart.API", "HoloCart.API\HoloCart.API.csproj", "{7723CC01-0DCC-4650-81A7-F3795E11F642}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloCart.Data", "HoloCart.Data\HoloCart.Data.csproj", "{AE7C6657-0E2D-4B9C-9B68-B79A2EE019B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloCart.Infrastructure", "HoloCart.Infrastructure\HoloCart.Infrastructure.csproj", "{51ED964F-B6CC-43FE-A780-9EDB55C25AF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloCart.Core", "HoloCart.Core\HoloCart.Core.csproj", "{96DB563E-4DEA-401A-B3F3-7C7D43B73E0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloCart.Service", "HoloCart.Service\HoloCart.Service.csproj", "{FE2C96F9-0A33-49D9-A98D-12EE89A5C334}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7723CC01-0DCC-4650-81A7-F3795E11F642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7723CC01-0DCC-4650-81A7-F3795E11F642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7723CC01-0DCC-4650-81A7-F3795E11F642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7723CC01-0DCC-4650-81A7-F3795E11F642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE7C6657-0E2D-4B9C-9B68-B79A2EE019B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE7C6657-0E2D-4B9C-9B68-B79A2EE019B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE7C6657-0E2D-4B9C-9B68-B79A2EE019B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE7C6657-0E2D-4B9C-9B68-B79A2EE019B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51ED964F-B6CC-43FE-A780-9EDB55C25AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51ED964F-B6CC-43FE-A780-9EDB55C25AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51ED964F-B6CC-43FE-A780-9EDB55C25AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51ED964F-B6CC-43FE-A780-9EDB55C25AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96DB563E-4DEA-401A-B3F3-7C7D43B73E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96DB563E-4DEA-401A-B3F3-7C7D43B73E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96DB563E-4DEA-401A-B3F3-7C7D43B73E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96DB563E-4DEA-401A-B3F3-7C7D43B73E0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE2C96F9-0A33-49D9-A98D-12EE89A5C334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2C96F9-0A33-49D9-A98D-12EE89A5C334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE2C96F9-0A33-49D9-A98D-12EE89A5C334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE2C96F9-0A33-49D9-A98D-12EE89A5C334}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
