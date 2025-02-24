@@ -1,0 +1,6 @@
+@HoloCart.API_HostAddress = http://localhost:5228
+
+GET {{HoloCart.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
