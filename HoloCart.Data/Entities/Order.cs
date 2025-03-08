@@ -1,38 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using HoloCart.Data.Entities.Identity;
 
 namespace HoloCart.Data.Entities
 {
-    public enum OrderStatus
-    {
-        Pending,
-        Processing,
-        Completed,
-        Cancelled
-    }
 
     public class Order
     {
-        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public int ApplicationUserId { get; set; }
+        public DateTime OrderDate { get; set; }
+        public decimal TotalAmount { get; set; }
 
-        // Each order belongs to a user.
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual User user { get; set; }
-
-        // The shipping address used for this order (optional).
-        public int? ShippingAddressId { get; set; }
-        [ForeignKey("ShippingAddressId")]
+        // FK to ShippingAddress
+        public int ShippingAddressId { get; set; }
         public virtual ShippingAddress ShippingAddress { get; set; }
 
-        public OrderStatus Status { get; set; }
+        // Optional discount applied to the order
+        public int? DiscountId { get; set; }
+        public virtual Discount Discount { get; set; }
 
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal Total { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-
-        // Navigation properties
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
         public virtual Payment Payment { get; set; }
     }

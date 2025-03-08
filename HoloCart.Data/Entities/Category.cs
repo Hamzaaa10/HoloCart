@@ -1,18 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HoloCart.Data.Entities
+﻿namespace HoloCart.Data.Entities
 {
     public class Category
     {
-        public int Id { get; set; }
-
-        [Required, MaxLength(100)]
+        public int CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ImageUrl { get; set; } // URL for category image
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        // Navigation property: One Category can have many Products.
+        // Optional self-referencing for sub-categories
+        public int? ParentCategoryId { get; set; }
+        public virtual Category ParentCategory { get; set; }
+        public virtual ICollection<Category> ChildCategories { get; set; }
+
+        // One-to-many: A category has many products
         public virtual ICollection<Product> Products { get; set; }
     }
 }
