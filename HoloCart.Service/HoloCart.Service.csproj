@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.10.0" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HoloCart.Data\HoloCart.Data.csproj" />
     <ProjectReference Include="..\HoloCart.Infrastructure\HoloCart.Infrastructure.csproj" />
   </ItemGroup>

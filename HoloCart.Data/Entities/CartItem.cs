@@ -1,28 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace HoloCart.Data.Entities
+﻿namespace HoloCart.Data.Entities
 {
     public class CartItem
     {
-        [Key]
-        public int Id { get; set; }
+        public int CartItemId { get; set; }
 
-        [Required]
         public int CartId { get; set; }
+        public virtual Cart Cart { get; set; }
 
-        [Required]
-        public int ProductVariantId { get; set; }
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
 
-        public int Quantity { get; set; } = 1;
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        [ForeignKey("CartId")]
-        public Cart Cart { get; set; }
-
-        [ForeignKey("ProductVariantId")]
-        public ProductVariant ProductVariant { get; set; }
+        public int Quantity { get; set; }
     }
 }
 

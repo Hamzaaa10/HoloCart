@@ -24,21 +24,18 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Cart", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CartId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
+                    b.Property<int>("ApplicationUserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CartId");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("ApplicationUserId")
                         .IsUnique();
 
                     b.ToTable("Carts");
@@ -46,124 +43,107 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.CartItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductVariantId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CartItemId");
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("ProductVariantId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int?>("ParentCategoryId")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Discount", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DiscountId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DiscountId"));
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("DiscountPercentage")
+                    b.Property<decimal>("Percentage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.HasKey("DiscountId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.ToTable("Discounts");
                 });
 
-            modelBuilder.Entity("HoloCart.Data.Entities.Favorite", b =>
+            modelBuilder.Entity("HoloCart.Data.Entities.Favourite", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("FavouriteId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavouriteId"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("FavouriteId");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserId", "ProductId")
+                    b.HasIndex("ApplicationUserId", "ProductId")
                         .IsUnique();
 
-                    b.ToTable("Favorites");
+                    b.ToTable("Favourites");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Identity.ApplicationRole", b =>
@@ -207,6 +187,12 @@ namespace HoloCart.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -244,6 +230,9 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<byte[]>("ProfileImage")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -309,81 +298,77 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ShippingAddressId")
+                    b.Property<int>("ShippingAddressId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(10,2)");
+                    b.HasKey("OrderId");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("DiscountId");
 
                     b.HasIndex("ShippingAddressId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,2)");
-
-                    b.Property<int>("ProductVariantId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderItemId");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductVariantId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Payment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PaymentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -394,10 +379,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("PaymentId");
 
                     b.HasIndex("OrderId")
                         .IsUnique();
@@ -407,187 +389,167 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
                     b.Property<decimal>("BasePrice")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image3DUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("MainImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalSales")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("DiscountId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("HoloCart.Data.Entities.ProductDiscount", b =>
+            modelBuilder.Entity("HoloCart.Data.Entities.ProductColor", b =>
                 {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DiscountId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "DiscountId");
-
-                    b.HasIndex("DiscountId");
-
-                    b.ToTable("ProductDiscounts");
-                });
-
-            modelBuilder.Entity("HoloCart.Data.Entities.ProductVariant", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductColorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductColorId"));
 
-                    b.Property<decimal>("AdditionalPrice")
-                        .HasColumnType("decimal(10,2)");
+                    b.Property<string>("ColorHex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ColorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SKU")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Stock")
+                    b.Property<int>("ProductImageId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VariantName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
+                    b.HasKey("ProductColorId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductVariants");
+                    b.HasIndex("ProductImageId")
+                        .IsUnique();
+
+                    b.ToTable("ProductColors");
+                });
+
+            modelBuilder.Entity("HoloCart.Data.Entities.ProductImage", b =>
+                {
+                    b.Property<int>("ProductImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductImageId"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductImageId");
+
+                    b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("HoloCart.Data.Entities.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ApplicationUserId", "ProductId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.ShippingAddress", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ShippingAddressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShippingAddressId"));
 
                     b.Property<string>("AddressLine1")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ShippingAddressId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("ShippingAddresses");
-                });
-
-            modelBuilder.Entity("HoloCart.Data.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -695,13 +657,13 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Cart", b =>
                 {
-                    b.HasOne("HoloCart.Data.Entities.User", "user")
+                    b.HasOne("HoloCart.Data.Entities.Identity.ApplicationUser", "User")
                         .WithOne("Cart")
-                        .HasForeignKey("HoloCart.Data.Entities.Cart", "UserId")
+                        .HasForeignKey("HoloCart.Data.Entities.Cart", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.CartItem", b =>
@@ -712,34 +674,44 @@ namespace HoloCart.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HoloCart.Data.Entities.ProductVariant", "ProductVariant")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ProductVariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("HoloCart.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Cart");
 
-                    b.Navigation("ProductVariant");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("HoloCart.Data.Entities.Favorite", b =>
+            modelBuilder.Entity("HoloCart.Data.Entities.Category", b =>
                 {
-                    b.HasOne("HoloCart.Data.Entities.Product", "Product")
-                        .WithMany("Favorites")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("HoloCart.Data.Entities.Category", "ParentCategory")
+                        .WithMany("ChildCategories")
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("HoloCart.Data.Entities.Favourite", b =>
+                {
+                    b.HasOne("HoloCart.Data.Entities.Identity.ApplicationUser", "User")
+                        .WithMany("Favourites")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HoloCart.Data.Entities.User", "user")
-                        .WithMany("Favorites")
-                        .HasForeignKey("UserId")
+                    b.HasOne("HoloCart.Data.Entities.Product", "Product")
+                        .WithMany("FavouritedBy")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Identity.UserRefreshToken", b =>
@@ -755,20 +727,27 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Order", b =>
                 {
-                    b.HasOne("HoloCart.Data.Entities.ShippingAddress", "ShippingAddress")
+                    b.HasOne("HoloCart.Data.Entities.Identity.ApplicationUser", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("ShippingAddressId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("HoloCart.Data.Entities.User", "user")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
+                    b.HasOne("HoloCart.Data.Entities.Discount", "Discount")
+                        .WithMany()
+                        .HasForeignKey("DiscountId");
+
+                    b.HasOne("HoloCart.Data.Entities.ShippingAddress", "ShippingAddress")
+                        .WithMany()
+                        .HasForeignKey("ShippingAddressId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Discount");
+
                     b.Navigation("ShippingAddress");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.OrderItem", b =>
@@ -779,15 +758,15 @@ namespace HoloCart.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HoloCart.Data.Entities.ProductVariant", "ProductVariant")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductVariantId")
+                    b.HasOne("HoloCart.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
 
-                    b.Navigation("ProductVariant");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Payment", b =>
@@ -806,50 +785,65 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasOne("HoloCart.Data.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoloCart.Data.Entities.Discount", "Discount")
+                        .WithMany("Products")
+                        .HasForeignKey("DiscountId");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("HoloCart.Data.Entities.ProductDiscount", b =>
-                {
-                    b.HasOne("HoloCart.Data.Entities.Discount", "Discount")
-                        .WithMany("ProductDiscounts")
-                        .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HoloCart.Data.Entities.Product", "Product")
-                        .WithMany("ProductDiscounts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Discount");
+                });
+
+            modelBuilder.Entity("HoloCart.Data.Entities.ProductColor", b =>
+                {
+                    b.HasOne("HoloCart.Data.Entities.Product", "Product")
+                        .WithMany("Colors")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HoloCart.Data.Entities.ProductImage", "Image")
+                        .WithOne("ProductColor")
+                        .HasForeignKey("HoloCart.Data.Entities.ProductColor", "ProductImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
 
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("HoloCart.Data.Entities.ProductVariant", b =>
+            modelBuilder.Entity("HoloCart.Data.Entities.Review", b =>
                 {
+                    b.HasOne("HoloCart.Data.Entities.Identity.ApplicationUser", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HoloCart.Data.Entities.Product", "Product")
-                        .WithMany("ProductVariants")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.ShippingAddress", b =>
                 {
-                    b.HasOne("HoloCart.Data.Entities.User", "user")
+                    b.HasOne("HoloCart.Data.Entities.Identity.ApplicationUser", "User")
                         .WithMany("ShippingAddresses")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -910,16 +904,29 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Category", b =>
                 {
+                    b.Navigation("ChildCategories");
+
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Discount", b =>
                 {
-                    b.Navigation("ProductDiscounts");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Identity.ApplicationUser", b =>
                 {
+                    b.Navigation("Cart")
+                        .IsRequired();
+
+                    b.Navigation("Favourites");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("ShippingAddresses");
+
                     b.Navigation("UserRefreshTokens");
                 });
 
@@ -933,35 +940,15 @@ namespace HoloCart.Infrastructure.Migrations
 
             modelBuilder.Entity("HoloCart.Data.Entities.Product", b =>
                 {
-                    b.Navigation("Favorites");
+                    b.Navigation("Colors");
 
-                    b.Navigation("ProductDiscounts");
-
-                    b.Navigation("ProductVariants");
+                    b.Navigation("FavouritedBy");
                 });
 
-            modelBuilder.Entity("HoloCart.Data.Entities.ProductVariant", b =>
+            modelBuilder.Entity("HoloCart.Data.Entities.ProductImage", b =>
                 {
-                    b.Navigation("CartItems");
-
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("HoloCart.Data.Entities.ShippingAddress", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("HoloCart.Data.Entities.User", b =>
-                {
-                    b.Navigation("Cart")
+                    b.Navigation("ProductColor")
                         .IsRequired();
-
-                    b.Navigation("Favorites");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("ShippingAddresses");
                 });
 #pragma warning restore 612, 618
         }
