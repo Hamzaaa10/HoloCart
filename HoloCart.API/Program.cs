@@ -1,4 +1,4 @@
-using HoloCart.Core;
+﻿using HoloCart.Core;
 using HoloCart.Core.Middleware;
 using HoloCart.Data.Entities.Identity;
 using HoloCart.Infrastructure;
@@ -44,10 +44,10 @@ builder.Services.AddCors(options =>
 });
 
 #endregion
-builder.WebHost.ConfigureKestrel(options =>
+/*builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5000);
-});
+});*/
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -69,7 +69,7 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors(CORS);
 
-app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "Swagger Demo"));
+ظظapp.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "Swagger Demo"));
 app.UseAuthentication();
 app.UseAuthorization();
 
