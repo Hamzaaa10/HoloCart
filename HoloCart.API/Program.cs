@@ -44,6 +44,10 @@ builder.Services.AddCors(options =>
 });
 
 #endregion
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000);
+});
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -52,6 +56,7 @@ using (var scope = app.Services.CreateScope())
     await RoleSeeder.SeedAsync(roleManager);
     await UserSeeder.SeedAsync(userManager);
 }
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
