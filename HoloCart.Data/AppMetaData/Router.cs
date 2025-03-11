@@ -31,10 +31,8 @@
             public const string SendResetPasswordCode = Prefix + "/SendResetPasswordCode";
             public const string ConfirmResetPasswordCode = Prefix + "/ConfirmResetPasswordCode";
             public const string ResetPassword = Prefix + "/ResetPassword";
-
-
-
-
+            public const string FacebookLogin = Prefix + "/FacebookLogin";
+            public const string GoogleLogin = Prefix + "/GoogleLogin";
 
         }
         public static class AuthorizationRouting

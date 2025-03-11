@@ -1,4 +1,5 @@
-﻿using HoloCart.Data.Entities.Identity;
+﻿using Google.Apis.Auth;
+using HoloCart.Data.Entities.Identity;
 using HoloCart.Data.Helpers;
 using HoloCart.Data.Responses;
 using HoloCart.Infrastructure.AbstractRepository;
@@ -7,6 +8,7 @@ using HoloCart.Service.Abstract;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -21,17 +23,28 @@ namespace HoloCart.Service.Implemintation
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _appDBContext;
         private readonly IEmailService _emailService;
+        private readonly ExternalAuthenticationSetting _externalAuthenticationSetting;
+        private readonly HttpClient _httpClient;
+
 
         // private readonly IEncryptionProvider _encryptionProvider;
 
 
-        public AuthenticationService(Jwtsettings jwtsettings, IRefreshTokenRepository refreshTokenRepository, UserManager<ApplicationUser> userManager, AppDbContext appDBContext, IEmailService emailService)
+        public AuthenticationService(Jwtsettings jwtsettings,
+            IRefreshTokenRepository refreshTokenRepository,
+            UserManager<ApplicationUser> userManager,
+            AppDbContext appDBContext,
+            IEmailService emailService,
+            ExternalAuthenticationSetting externalAuthenticationSetting,
+            HttpClient httpClient)
         {
             _jwtsettings = jwtsettings;
             _refreshTokenRepository = refreshTokenRepository;
             _userManager = userManager;
             _appDBContext = appDBContext;
             _emailService = emailService;
+            _externalAuthenticationSetting = externalAuthenticationSetting;
+            _httpClient = httpClient;
         }
         public async Task<List<Claim>> GetClaims(ApplicationUser user)
         {
@@ -272,6 +285,67 @@ namespace HoloCart.Service.Implemintation
             }
         }
 
+        public async Task<JwtAuthResponse> LoginWithGoogle(string googleToken)
+        {
+            var payload = await VerifyGoogleToken(googleToken);
+            if (payload == null)
+                throw new Exception("Invalid Google Token");
+
+            var user = await _userManager.FindByEmailAsync(payload.Email);
+            if (user == null)
+            {
+                user = new ApplicationUser { Email = payload.Email, UserName = payload.Email };
+                await _userManager.CreateAsync(user);
+            }
+
+            return await GetJWTtoken(user);
+        }
+
+        public async Task<JwtAuthResponse> LoginWithFacebook(string facebookToken)
+        {
+            var fbUser = await VerifyFacebookToken(facebookToken);
+            if (fbUser == null)
+                throw new Exception("Invalid Facebook Token");
+
+            var user = await _userManager.FindByEmailAsync(fbUser.Email);
+            if (user == null)
+            {
+                user = new ApplicationUser { Email = fbUser.Email, UserName = fbUser.Email };
+                await _userManager.CreateAsync(user);
+            }
+
+            return await GetJWTtoken(user);
+        }
+
+        private async Task<GoogleJsonWebSignature.Payload> VerifyGoogleToken(string idToken)
+        {
+            var settings = new GoogleJsonWebSignature.ValidationSettings
+            {
+                Audience = new List<string> { _externalAuthenticationSetting.GoogleClientId }
+            };
+            var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
+            Console.WriteLine($"Token Audience: {string.Join(", ", payload.Audience)}");
+            Console.WriteLine($"Expected Audience: {_externalAuthenticationSetting.GoogleClientId}");
+            return await GoogleJsonWebSignature.ValidateAsync(idToken, settings);
+        }
+
+        private async Task<FacebookUserData> VerifyFacebookToken(string accessToken)
+        {
+            var url = $"https://graph.facebook.com/me?fields=id,name,email&access_token={accessToken}";
+            var response = await _httpClient.GetStringAsync(url);
+
+            return JsonConvert.DeserializeObject<FacebookUserData>(response);
+        }
+
+        /* private async Task<JwtAuthResponse> GenerateJwtToken(ApplicationUser user)
+         {
+             // الكود الخاص بإنشاء JWT Token
+             return new JwtAuthResponse
+             {
+                 Token = "GeneratedJWTToken",
+                 Expiration = DateTime.UtcNow.AddHours(1)
+             };
+         }*/
     }
 }
 

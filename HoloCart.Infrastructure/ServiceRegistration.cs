@@ -13,19 +13,23 @@ namespace HoloCart.Infrastructure
 {
     public static class ServiceRegistration
     {
+
         public static IServiceCollection AddServiceRegistration(this IServiceCollection services, IConfiguration configuration)
         {
+            var externalAuthSettings = configuration.GetSection("ExternalAuthenticationSetting");
+
             services.AddAuthentication()
-    .AddGoogle(googleOptions =>
-    {
-        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-    })
-    .AddFacebook(facebookOptions =>
-    {
-        facebookOptions.AppId = configuration["Authentication:Facebook:AppId"];
-        facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
-    });
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = externalAuthSettings["GoogleClientId"];
+                    googleOptions.ClientSecret = externalAuthSettings["GoogleClientSecret"];
+                })
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = externalAuthSettings["AppId"];
+                    facebookOptions.AppSecret = externalAuthSettings["AppSecret"];
+                });
+
 
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -64,16 +68,17 @@ namespace HoloCart.Infrastructure
             //JWT Authentication
             var jwtSettings = new Jwtsettings();
             var SmtpSettings = new SmtpSettings();
+            var ExternalAuthenticationSetting = new ExternalAuthenticationSetting();
+
             //  var emailSettings = new EmailSettings();
             configuration.GetSection(nameof(jwtSettings)).Bind(jwtSettings);
             configuration.GetSection(nameof(SmtpSettings)).Bind(SmtpSettings);
-
-            //   configuration.GetSection(nameof(emailSettings)).Bind(emailSettings);
+            configuration.GetSection(nameof(ExternalAuthenticationSetting)).Bind(ExternalAuthenticationSetting);
 
             services.AddSingleton(jwtSettings);
             services.AddSingleton(SmtpSettings);
-
-            // services.AddSingleton(emailSettings);
+            services.AddSingleton(ExternalAuthenticationSetting);
+            services.AddHttpClient();
 
             services.AddAuthentication(x =>
             {
@@ -128,7 +133,7 @@ namespace HoloCart.Infrastructure
            });
             });
 
-            services.AddAuthorization(option =>
+            /*services.AddAuthorization(option =>
             {
                 option.AddPolicy("CreateStudent", policy =>
                 {
@@ -145,7 +150,7 @@ namespace HoloCart.Infrastructure
                     policy.RequireClaim("Edit Student", "True");
                 }
                                );
-            });
+            });*/
             return services;
         }
 
