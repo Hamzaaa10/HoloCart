@@ -57,5 +57,18 @@ namespace HoloCart.API.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+        [HttpPost(Router.AuthenticationRouting.GoogleLogin)]
+        public async Task<IActionResult> LoginWithGoogle([FromBody] LoginWithGoogleRequest request)
+        {
+            var response = await Mediator.Send(request);
+            return NewResult(response);
+        }
+
+        [HttpPost(Router.AuthenticationRouting.FacebookLogin)]
+        public async Task<IActionResult> LoginWithFacebook([FromBody] LoginWithFacebookRequest request)
+        {
+            var response = await Mediator.Send(request);
+            return NewResult(response);
+        }
     }
 }
