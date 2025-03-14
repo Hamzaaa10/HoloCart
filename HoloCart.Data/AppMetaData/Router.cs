@@ -53,5 +53,14 @@
             public const string Prefix = Rule + "Email";
             public const string SendEmail = Prefix + "Send";
         }
+        public static class CategoryRouting
+        {
+            public const string Prefix = Rule + "Category";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetById = Prefix + "/GetById" + "/{id}";
+            public const string Create = Prefix + "/Create";
+            public const string Update = Prefix + "/Update";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+        }
     }
 }

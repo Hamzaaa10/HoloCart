@@ -23,4 +23,8 @@
     <Folder Include="Mapping\AuthorizationMapping\Command\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Features\DepartmentFeatures\Queries\Requests\GetCategoryByIdRequest.cs" />
+  </ItemGroup>
+
 </Project>
