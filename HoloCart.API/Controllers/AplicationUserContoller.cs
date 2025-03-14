@@ -29,9 +29,9 @@ namespace HoloCart.API.Controllers
             return NewResult(response);
         }
         [HttpPut(Router.ApplicationUserRouting.Update)]
-        public async Task<IActionResult> Update([FromBody] UpdateAplicationUserRequest request)
+        public async Task<IActionResult> Update([FromBody] UpdateAplicationUserRequest Command)
         {
-            var response = await Mediator.Send(request);
+            var response = await Mediator.Send(Command);
             return NewResult(response);
         }
 
