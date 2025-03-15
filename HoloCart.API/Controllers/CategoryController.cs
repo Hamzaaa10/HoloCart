@@ -9,18 +9,19 @@ namespace HoloCart.API.Controllers
     [ApiController]
     public class CategoryController : AppControllerBase
     {
-        [HttpGet(Router.CategoryRouting.GetById)]
-        public async Task<IActionResult> GetCategoryByIdAsync(int id)
-        {
-            var Response = await Mediator.Send(new GetCategoryByIdRequest(id));
-            return NewResult(Response);
-        }
+
 
         [HttpGet(Router.CategoryRouting.GetAll)]
         public async Task<IActionResult> GetAllCategory()
         {
             var Response = await Mediator.Send(new GetCategoriesRequest());
             return Ok(Response);
+        }
+        [HttpGet(Router.CategoryRouting.GetById)]
+        public async Task<IActionResult> GetCategoryByIdAsync(int id)
+        {
+            var Response = await Mediator.Send(new GetCategoryByIdRequest(id));
+            return NewResult(Response);
         }
         [HttpPost(Router.CategoryRouting.Create)]
         public async Task<IActionResult> AddCategory([FromForm] AddCategoryRequest Command)
