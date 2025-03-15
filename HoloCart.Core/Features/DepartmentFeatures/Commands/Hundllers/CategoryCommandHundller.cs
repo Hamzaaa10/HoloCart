@@ -53,7 +53,7 @@ namespace HoloCart.Core.Features.DepartmentFeatures.Commands.Hundllers
 
         public async Task<Response<string>> Handle(UpdateCategoryRequest request, CancellationToken cancellationToken)
         {
-            var Oldcategory = await _categoryRepository.GetByIdAsync(request.id);
+            var Oldcategory = await _categoryService.GetByIdAcync(request.id);
             if (Oldcategory == null) return BadRequest<string>("CategoryNotFound");
             var NewCategory = _mapper.Map(request, Oldcategory);
             var Result = await _categoryService.UpdateCategoryAsync(request.id, NewCategory, request.CategoryImage);

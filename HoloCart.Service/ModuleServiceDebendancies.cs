@@ -19,6 +19,7 @@ namespace HoloCart.Service
             services.AddTransient<IAuthorizationService, AuthorizationService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IDiscountService, DiscountService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();

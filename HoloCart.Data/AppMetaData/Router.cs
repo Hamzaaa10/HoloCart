@@ -62,5 +62,14 @@
             public const string Update = Prefix + "/Update";
             public const string Delete = Prefix + "/Delete" + "/{id}";
         }
+        public static class DiscountRouting
+        {
+            public const string Prefix = Rule + "Discount";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetById = Prefix + "/GetById" + "/{id}";
+            public const string Create = Prefix + "/Create";
+            public const string Update = Prefix + "/Update";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+        }
     }
 }
