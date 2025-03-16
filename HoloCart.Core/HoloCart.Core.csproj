@@ -20,7 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\ProductFeatures\Command\Hundller\" />
+    <Folder Include="Features\ProductFeatures\Command\Validations\" />
+    <Folder Include="Features\ProductFeatures\Query\Hundller\" />
+    <Folder Include="Features\ProductFeatures\Query\Requests\" />
+    <Folder Include="Features\ProductFeatures\Query\Responses\" />
     <Folder Include="Mapping\AuthorizationMapping\Command\" />
+    <Folder Include="Mapping\FavouritMapping\Query\" />
   </ItemGroup>
 
   <ItemGroup>
