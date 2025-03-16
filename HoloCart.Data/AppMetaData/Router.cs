@@ -71,5 +71,13 @@
             public const string Update = Prefix + "/Update";
             public const string Delete = Prefix + "/Delete" + "/{id}";
         }
+        public static class FavouritRouting
+        {
+            public const string Prefix = Rule + "Favourit";
+            public const string GetAll = Prefix + "/FavouritProducts";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete";
+        }
+
     }
 }

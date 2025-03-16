@@ -21,6 +21,8 @@ namespace HoloCart.Service
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<IDiscountService, DiscountService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IFavouritService, FavouritService>();
+
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
 

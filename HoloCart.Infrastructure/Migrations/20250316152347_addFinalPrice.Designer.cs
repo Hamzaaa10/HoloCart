@@ -4,6 +4,7 @@ using HoloCart.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoloCart.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250316152347_addFinalPrice")]
+    partial class addFinalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +41,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasIndex("ApplicationUserId")
                         .IsUnique();
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.CartItem", b =>
@@ -64,7 +67,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Category", b =>
@@ -94,7 +97,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Discount", b =>
@@ -123,7 +126,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Discounts", (string)null);
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Favourite", b =>
@@ -147,7 +150,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasIndex("ApplicationUserId", "ProductId")
                         .IsUnique();
 
-                    b.ToTable("Favourites", (string)null);
+                    b.ToTable("Favourites");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Identity.ApplicationRole", b =>
@@ -297,7 +300,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRefreshToken", (string)null);
+                    b.ToTable("UserRefreshToken");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Order", b =>
@@ -331,7 +334,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("ShippingAddressId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.OrderItem", b =>
@@ -360,7 +363,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Payment", b =>
@@ -388,7 +391,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Product", b =>
@@ -426,7 +429,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("DiscountId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.ProductColor", b =>
@@ -458,7 +461,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasIndex("ProductImageId")
                         .IsUnique();
 
-                    b.ToTable("ProductColors", (string)null);
+                    b.ToTable("ProductColors");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.ProductImage", b =>
@@ -475,7 +478,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasKey("ProductImageId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Review", b =>
@@ -511,7 +514,7 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasIndex("ApplicationUserId", "ProductId")
                         .IsUnique();
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.ShippingAddress", b =>
@@ -553,7 +556,7 @@ namespace HoloCart.Infrastructure.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ShippingAddresses", (string)null);
+                    b.ToTable("ShippingAddresses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
