@@ -17,12 +17,14 @@
         // Optional discount
         public int? DiscountId { get; set; }
         public virtual Discount Discount { get; set; }
-        public decimal FinalPrice => Discount != null && DateTime.UtcNow >= Discount.StartDate && DateTime.UtcNow <= Discount.EndDate
-        ? BasePrice - (BasePrice * Discount.Percentage / 100)
-        : BasePrice;
+
         // A product can have many colors (each with its own image)
         public virtual ICollection<ProductColor> Colors { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
         public virtual ICollection<Favourite> FavouritedBy { get; set; } = new List<Favourite>();
+
+
 
     }
 

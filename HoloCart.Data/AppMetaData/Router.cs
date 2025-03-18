@@ -78,6 +78,25 @@
             public const string Create = Prefix + "/Create";
             public const string Delete = Prefix + "/Delete";
         }
+        public static class ProductRouting
+        {
+            public const string Prefix = Rule + "Product";
+            public const string GetAll = Prefix + "/Paganited";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete";
+            public const string Update = Prefix + "/Update";
+            public const string GetById = Prefix + "/GetById" + "/{id}";
+            public const string Paginated = Prefix + "/Paginated";
+            public const string ProductsByCategory = Prefix + "/ProductsByCategory";
+            public const string PaginatedByDiscount = Prefix + "/ProductsByDiscount";
+
+
+
+
+
+
+
+        }
 
     }
 }

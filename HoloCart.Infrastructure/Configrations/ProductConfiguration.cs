@@ -21,6 +21,10 @@ namespace HoloCart.Infrastructure.Configrations
                 .WithMany(d => d.Products)
                 .HasForeignKey(p => p.DiscountId)
                 .IsRequired(false);
+
+            builder.HasMany(p => p.Reviews)
+           .WithOne(r => r.Product)
+           .HasForeignKey(r => r.ProductId);
         }
     }
 }
