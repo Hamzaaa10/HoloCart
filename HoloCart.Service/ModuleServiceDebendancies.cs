@@ -23,6 +23,8 @@ namespace HoloCart.Service
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IFavouritService, FavouritService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IReviewService, ReviewService>();
+
 
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
