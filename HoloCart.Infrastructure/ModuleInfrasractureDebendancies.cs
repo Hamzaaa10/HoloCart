@@ -16,6 +16,8 @@ namespace HoloCart.Infrastructure
             services.AddTransient<IDiscountRepository, DiscountRepository>();
             services.AddTransient<IFavouritRepository, FavouritRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
+
 
             return services;
         }

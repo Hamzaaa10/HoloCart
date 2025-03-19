@@ -7,7 +7,7 @@ namespace HoloCart.Core.Mapping.DiscountMapping
     {
         public void GetAllDiscountsMapping()
         {
-            CreateMap<Discount, GetAllDiscountsResponse>().ForMember(dest => dest.IsActive, opt => opt.Ignore()); ;
+            CreateMap<Discount, GetAllDiscountsResponse>().ForMember(dest => dest.IsActive, opt => opt.Ignore());
 
         }
     }

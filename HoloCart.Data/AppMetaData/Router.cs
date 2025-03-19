@@ -90,13 +90,17 @@
             public const string ProductsByCategory = Prefix + "/ProductsByCategory";
             public const string PaginatedByDiscount = Prefix + "/ProductsByDiscount";
 
-
-
-
-
-
-
         }
+        public static class ReviewRouting
+        {
+            public const string Prefix = Rule + "Review";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete";
+            public const string Update = Prefix + "/Update" + "/{id}";
+            public const string ReviewsWithProduct = Prefix + "/Product" + "/{id}";
+        }
+
+
 
     }
 }
