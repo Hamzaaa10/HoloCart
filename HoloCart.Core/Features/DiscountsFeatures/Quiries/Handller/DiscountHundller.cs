@@ -24,8 +24,8 @@ namespace HoloCart.Core.Features.DiscountsFeatures.Quiries.Handller
         {
             var Discount = await _discountService.GetDiscountById(request.Id);
             if (Discount == null) return NotFound<GetDiscountByIdResponse>("Discount Not Found");
-            var MappedCategory = _mapper.Map<GetDiscountByIdResponse>(Discount);
-            return Success<GetDiscountByIdResponse>(MappedCategory);
+            var MappedDiscount = _mapper.Map<GetDiscountByIdResponse>(Discount);
+            return Success<GetDiscountByIdResponse>(MappedDiscount);
         }
 
         public async Task<Response<List<GetAllDiscountsResponse>>> Handle(GetAllDiscountsQuery request, CancellationToken cancellationToken)

@@ -24,6 +24,8 @@ namespace HoloCart.Service
             services.AddTransient<IFavouritService, FavouritService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IReviewService, ReviewService>();
+            services.AddTransient<IShippingAddressService, ShippingAddressService>();
+
 
 
 

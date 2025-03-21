@@ -28,7 +28,7 @@ namespace HoloCart.Core.Features.FavouriteFeatures.Command.Validations
         public void ApplayCustomValidationrules()
         {
             RuleFor(x => x.ProductId)
-                  .MustAsync(async (model, key, CancellationToken) => !await _favouritService.IsProductInFavourit(key, model.UserId)).WithMessage("Discount Code is already existes");
+                  .MustAsync(async (model, key, CancellationToken) => !await _favouritService.IsProductInFavourit(key, model.UserId)).WithMessage("Product is already in favourit");
         }
     }
 }

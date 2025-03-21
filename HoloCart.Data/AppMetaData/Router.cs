@@ -74,9 +74,9 @@
         public static class FavouritRouting
         {
             public const string Prefix = Rule + "Favourit";
-            public const string GetAll = Prefix + "/FavouritProducts";
+            public const string GetAll = Prefix + "/user" + "/{id}";
             public const string Create = Prefix + "/Create";
-            public const string Delete = Prefix + "/Delete";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
         }
         public static class ProductRouting
         {
@@ -95,9 +95,20 @@
         {
             public const string Prefix = Rule + "Review";
             public const string Create = Prefix + "/Create";
-            public const string Delete = Prefix + "/Delete";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
             public const string Update = Prefix + "/Update" + "/{id}";
             public const string ReviewsWithProduct = Prefix + "/Product" + "/{id}";
+        }
+        public static class ShippingAddressRouting
+        {
+            public const string Prefix = Rule + "ShippingAddress";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string Update = Prefix + "/Update";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetById = Prefix + "/GetById" + "/{id}";
+
+
         }
 
 

@@ -30,7 +30,6 @@ namespace HoloCart.Service.Implemintation
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in AddReviewAsync: {ex.Message}");
                 return "FailedInAdd";
             }
         }
