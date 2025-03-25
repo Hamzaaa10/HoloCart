@@ -1,4 +1,5 @@
 ﻿using HoloCart.Data.Entities.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace HoloCart.Service.Abstract
 {
@@ -9,6 +10,8 @@ namespace HoloCart.Service.Abstract
         public Task<bool> IsUserNameExists(string UserName);
         public Task<bool> IsUserNameExistsExcludeYourself(int id, string UserName);
         public Task<string> AddUserAsync(ApplicationUser user, string password);
+        public Task<string> UpdateUserAsync(ApplicationUser user, IFormFile formFile);
+
 
     }
 }

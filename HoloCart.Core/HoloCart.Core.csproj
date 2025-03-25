@@ -20,7 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\OrderItemFeature\Query\" />
+    <Folder Include="Features\PaymentFeature\Query\Responses\" />
+    <Folder Include="Features\PaymentFeature\Query\Requests\" />
+    <Folder Include="Features\PaymentFeature\Query\PaymentQueryHundller\" />
     <Folder Include="Mapping\AuthorizationMapping\Command\" />
+    <Folder Include="Mapping\CartItemMapping\Query\" />
     <Folder Include="Mapping\FavouritMapping\Query\" />
   </ItemGroup>
 

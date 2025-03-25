@@ -8,7 +8,7 @@ namespace HoloCart.Core.Mapping.ApplicatinUserMapping
 
         public void UpdateAplicationUserMapping()
         {
-            CreateMap<UpdateAplicationUserRequest, ApplicationUser>();
+            CreateMap<UpdateAplicationUserRequest, ApplicationUser>().ForMember(dest => dest.ProfileImage, opt => opt.Ignore()); ;
         }
     }
 }

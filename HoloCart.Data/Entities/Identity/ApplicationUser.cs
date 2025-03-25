@@ -9,6 +9,7 @@ namespace HoloCart.Data.Entities.Identity
         public string? Code { get; set; }
         public string? ProfileImage { get; set; }
         // Navigation properties
+
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<ShippingAddress> ShippingAddresses { get; set; }

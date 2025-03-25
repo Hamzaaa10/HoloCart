@@ -11,7 +11,7 @@ namespace HoloCart.Service.Abstract
         public Task<bool> IsCategoryNameExistsExcloud(string Name, int id);
         public Task<string> AddCategoryAsync(Category category, IFormFile formFile);
         public Task<string> DeleteCategoryAsync(int id);
-        public Task<string> UpdateCategoryAsync(int id, Category category, IFormFile formFile);
+        public Task<string> UpdateCategoryAsync(Category category, IFormFile formFile);
 
 
 

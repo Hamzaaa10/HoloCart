@@ -75,7 +75,7 @@ namespace HoloCart.Service.Implemintation
             return await _categoryRepository.GetTableNoTracking().Where(x => x.Name == Name && x.CategoryId != id).FirstOrDefaultAsync() == null ? false : true;
         }
 
-        public async Task<string> UpdateCategoryAsync(int id, Category category, IFormFile file)
+        public async Task<string> UpdateCategoryAsync(Category category, IFormFile file)
         {
 
             var context = _httpContextAccessor.HttpContext.Request;

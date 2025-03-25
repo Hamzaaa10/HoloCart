@@ -2,6 +2,7 @@
 {
     public class GetDiscountByIdResponse
     {
+        public int DiscountId { get; set; }
         public string Code { get; set; }
         public decimal Percentage { get; set; }  // For example, 15 means 15% off.
         public DateTime StartDate { get; set; }

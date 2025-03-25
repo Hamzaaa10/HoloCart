@@ -44,9 +44,14 @@ namespace HoloCart.Core.Features.ApplicationUserFeatures.Commands
             var OldUser = await _userManager.FindByIdAsync(request.Id.ToString());
             if (OldUser == null) return NotFound<string>("this user doesn't exists");
             var NewUser = _mapper.Map(request, OldUser);
-            var Result = await _userManager.UpdateAsync(NewUser);
-            if (!Result.Succeeded) return BadRequest<string>(Result.Errors.FirstOrDefault().Description);
-            return Success("Upating Succsesfully");
+            var Result = await _applicationUserService.UpdateUserAsync(NewUser, request.ProfileImage);
+            switch (Result)
+            {
+                case "NoImage": return BadRequest<string>("NoImage");
+                case "FailedToUploadImage": return BadRequest<string>("FailedToUploadImage");
+                case "FailedInUpdate": return BadRequest<string>("FailedInUpdate");
+            }
+            return Success("User Updated Successufully");
 
         }
 

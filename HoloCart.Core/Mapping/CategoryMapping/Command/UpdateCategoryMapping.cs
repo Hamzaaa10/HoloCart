@@ -7,7 +7,7 @@ namespace HoloCart.Core.Mapping.CategoryMapping
     {
         public void UpdateCategoryMapping()
         {
-            CreateMap<UpdateCategoryRequest, Category>().ForMember(dest => dest.CategoryImage, opt => opt.Ignore()); ;
+            CreateMap<UpdateCategoryRequest, Category>().ForMember(dest => dest.CategoryImage, opt => opt.Ignore());
         }
     }
 }

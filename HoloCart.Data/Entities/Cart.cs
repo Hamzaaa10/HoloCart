@@ -10,6 +10,8 @@ namespace HoloCart.Data.Entities
 
         // A cart contains many items.
         public virtual ICollection<CartItem> CartItems { get; set; }
+        public string? DiscountCode { get; set; }
+        public decimal DiscountPercentage { get; set; }
     }
 }
 
