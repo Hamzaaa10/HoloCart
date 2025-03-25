@@ -18,6 +18,14 @@ namespace HoloCart.Infrastructure
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<IShippingAddressRepository, ShippingAddressRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IOrderItemRepository, OrderItemRepository>();
+            services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<ICartItemRepositry, CartItemRepositry>();
+
+
+
+
 
             return services;
         }

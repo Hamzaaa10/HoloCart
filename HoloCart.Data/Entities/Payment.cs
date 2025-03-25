@@ -1,4 +1,6 @@
-﻿namespace HoloCart.Data.Entities
+﻿using HoloCart.Data.Enums.Payment;
+
+namespace HoloCart.Data.Entities
 {
 
 
@@ -14,12 +16,6 @@
         public virtual Order Order { get; set; }
     }
 
-    public enum PaymentMethod
-    {
-        CreditCard,
-        Paypal,
-        BankTransfer
-    }
 
 
 

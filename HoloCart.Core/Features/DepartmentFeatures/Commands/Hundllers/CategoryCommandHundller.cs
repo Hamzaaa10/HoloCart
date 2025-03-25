@@ -56,7 +56,7 @@ namespace HoloCart.Core.Features.DepartmentFeatures.Commands.Hundllers
             var Oldcategory = await _categoryService.GetByIdAcync(request.id);
             if (Oldcategory == null) return BadRequest<string>("CategoryNotFound");
             var NewCategory = _mapper.Map(request, Oldcategory);
-            var Result = await _categoryService.UpdateCategoryAsync(request.id, NewCategory, request.CategoryImage);
+            var Result = await _categoryService.UpdateCategoryAsync(NewCategory, request.CategoryImage);
             switch (Result)
             {
                 case "NoImage": return BadRequest<string>("NoImage");

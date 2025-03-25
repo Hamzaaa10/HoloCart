@@ -107,11 +107,42 @@
             public const string Update = Prefix + "/Update";
             public const string GetAll = Prefix + "/GetAll";
             public const string GetById = Prefix + "/GetById" + "/{id}";
-
-
         }
 
+        public static class PaymentRouting
+        {
+            public const string Prefix = Rule + "Payments";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string Update = Prefix + "/Update";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetById = Prefix + "/GetById" + "/{id}";
+        }
+        public static class OrderItemRouting
+        {
+            public const string Prefix = Rule + "OrderItem";
+            public const string Create = Prefix + "/Create";
 
+        }
+        public static class CartRouting
+        {
+            public const string Prefix = Rule + "Cart";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetByUserId = Prefix + "/User" + "/{id}";
+            public const string ApplayCode = Prefix + "/ApplayCuponCode";
+
+        }
+        public static class CartItemRouting
+        {
+            public const string Prefix = Rule + "CartItem";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string Update = Prefix + "/Update";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetById = Prefix + "/GetById" + "/{id}";
+        }
 
     }
 }
