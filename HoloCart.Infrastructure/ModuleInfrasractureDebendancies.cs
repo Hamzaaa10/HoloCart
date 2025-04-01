@@ -22,6 +22,9 @@ namespace HoloCart.Infrastructure
             services.AddTransient<IOrderItemRepository, OrderItemRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ICartItemRepositry, CartItemRepositry>();
+            services.AddTransient<IProductImageRepository, ProductImageRepository>();
+            services.AddTransient<IProductColorRepository, ProductColorRepository>();
+
 
 
 

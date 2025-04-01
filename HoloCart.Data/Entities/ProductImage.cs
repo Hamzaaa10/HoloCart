@@ -4,8 +4,7 @@
     {
         public int ProductImageId { get; set; }
         public string ImageUrl { get; set; }
-
-        // Optional reverse navigation
+        public int ProductColorId { get; set; }
         public virtual ProductColor ProductColor { get; set; }
     }
 }

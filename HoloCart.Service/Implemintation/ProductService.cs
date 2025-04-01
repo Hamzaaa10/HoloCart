@@ -51,6 +51,11 @@ namespace HoloCart.Service.Implemintation
         {
             var product = await _productRepository.GetByIdAsync(id);
             if (product == null) return "NotFound";
+
+            var imageUrl = product.MainImageUrl;
+            var deleteResult = await _fileService.DeleteImage(imageUrl);
+            if (!deleteResult) return "FailedToDeleteImage";
+
             await _productRepository.DeleteAsync(product);
             return "Success";
         }

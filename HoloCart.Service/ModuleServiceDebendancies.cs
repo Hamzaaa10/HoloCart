@@ -29,12 +29,8 @@ namespace HoloCart.Service
             services.AddTransient<IOrderItemService, OrderItemService>();
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<ICartItemService, CartItemService>();
-
-
-
-
-
-
+            services.AddTransient<IProductColorService, ProductColorService>();
+            services.AddTransient<IProductImageService, ProductImageService>();
 
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();

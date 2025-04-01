@@ -51,6 +51,11 @@ namespace HoloCart.Service.Implemintation
         {
             var Category = await _categoryRepository.GetTableNoTracking().Where(x => x.CategoryId == id).FirstOrDefaultAsync();
             if (Category == null) return "NotFound";
+
+            var imageUrl = Category.CategoryImage;
+            var deleteResult = await _fileService.DeleteImage(imageUrl);
+            if (!deleteResult) return "FailedToDeleteImage";
+
             await _categoryRepository.DeleteAsync(Category);
             return "Success";
         }

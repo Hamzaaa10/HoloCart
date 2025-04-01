@@ -144,5 +144,24 @@
             public const string GetById = Prefix + "/GetById" + "/{id}";
         }
 
+        public static class ProductColorRouting
+        {
+            public const string Prefix = Rule + "ProductColor";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string Update = Prefix + "/Update";
+            public const string GetAll = Prefix + "/ProductId";
+            public const string GetById = Prefix + "/{id}";
+        }
+
+        public static class ProductImageRouting
+        {
+            public const string Prefix = Rule + "ProductImage";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string Update = Prefix + "/Update";
+            public const string GetAll = Prefix + "/GetAll";
+            public const string GetById = Prefix + "/{id}";
+        }
     }
 }

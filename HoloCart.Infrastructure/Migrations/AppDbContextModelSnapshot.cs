@@ -454,15 +454,12 @@ namespace HoloCart.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductImageId")
+                    b.Property<int?>("ProductImageId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductColorId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductImageId")
-                        .IsUnique();
 
                     b.ToTable("ProductColors");
                 });
@@ -479,7 +476,13 @@ namespace HoloCart.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductColorId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductImageId");
+
+                    b.HasIndex("ProductColorId")
+                        .IsUnique();
 
                     b.ToTable("ProductImages");
                 });
@@ -815,15 +818,18 @@ namespace HoloCart.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HoloCart.Data.Entities.ProductImage", "Image")
-                        .WithOne("ProductColor")
-                        .HasForeignKey("HoloCart.Data.Entities.ProductColor", "ProductImageId")
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("HoloCart.Data.Entities.ProductImage", b =>
+                {
+                    b.HasOne("HoloCart.Data.Entities.ProductColor", "ProductColor")
+                        .WithOne("Image")
+                        .HasForeignKey("HoloCart.Data.Entities.ProductImage", "ProductColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Image");
-
-                    b.Navigation("Product");
+                    b.Navigation("ProductColor");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Review", b =>
@@ -957,9 +963,9 @@ namespace HoloCart.Infrastructure.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("HoloCart.Data.Entities.ProductImage", b =>
+            modelBuilder.Entity("HoloCart.Data.Entities.ProductColor", b =>
                 {
-                    b.Navigation("ProductColor")
+                    b.Navigation("Image")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

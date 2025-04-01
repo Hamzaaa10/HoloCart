@@ -47,6 +47,7 @@ namespace HoloCart.Core.Features.DepartmentFeatures.Commands.Hundllers
             {
                 case "Success": return Success<string>(" Deleted successfully");
                 case "NotFound": return BadRequest<string>("NotFound");
+                case "FailedToDeleteImage": return BadRequest<string>("NotFound");
                 default: return BadRequest<string>(Result);
             }
         }

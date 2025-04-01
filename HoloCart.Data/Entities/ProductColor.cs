@@ -13,7 +13,7 @@
 
         // One-to-one: Each ProductColor has exactly one associated ProductImage.
         // This FK is stored on the ProductColor.
-        public int ProductImageId { get; set; }
+        public int? ProductImageId { get; set; }
         public virtual ProductImage Image { get; set; }
     }
 }
