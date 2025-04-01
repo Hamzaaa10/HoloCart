@@ -8,12 +8,23 @@ namespace HoloCart.Service.Implemintation
     {
         #region Fileds
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly string _baseUrl;
+
+
         #endregion
         #region Constructors
-        public FileService(IWebHostEnvironment webHostEnvironment)
+        public FileService(IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _webHostEnvironment = webHostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
+            var request = _httpContextAccessor.HttpContext?.Request;
+            _baseUrl = request != null ? $"{request.Scheme}://{request.Host}/" : "";
+
         }
+
+
+
         #endregion
         #region Handle Functions
         public async Task<string> UploadImage(string Location, IFormFile file)
@@ -45,6 +56,26 @@ namespace HoloCart.Service.Implemintation
             {
                 return "NoImage";
             }
+        }
+        public async Task<bool> DeleteImage(string imageUrl)
+        {
+            try
+            {
+                var filePath = imageUrl.Replace(_baseUrl, "").TrimStart('/');
+                var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, filePath);
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
         #endregion
     }

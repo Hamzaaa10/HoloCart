@@ -60,8 +60,9 @@ namespace HoloCart.Core.Features.ProductFeatures.Command.Hundller
             var Result = await _productService.DeleteProductAsync(request.id);
             switch (Result)
             {
-                case "Success": return Success<string>(" Deleted successfully");
                 case "NotFound": return BadRequest<string>("NotFound");
+                case "FailedToDeleteImage": return BadRequest<string>("NotFound");
+                case "Success": return Success<string>(" Deleted successfully");
                 default: return BadRequest<string>(Result);
             }
         }

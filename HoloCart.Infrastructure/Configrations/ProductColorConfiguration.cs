@@ -12,12 +12,13 @@ namespace HoloCart.Infrastructure.Configrations
 
             builder.HasOne(pc => pc.Image)
                 .WithOne(pi => pi.ProductColor)
-                .HasForeignKey<ProductColor>(pc => pc.ProductImageId)
-                .IsRequired();
+                .HasForeignKey<ProductImage>(pi => pi.ProductColorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(pc => pc.Product)
-                .WithMany(p => p.Colors) // A Product has many Colors
+                .WithMany(p => p.Colors)
                 .HasForeignKey(pc => pc.ProductId)
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if needed
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
