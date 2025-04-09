@@ -6,10 +6,10 @@ namespace HoloCart.Core.Features.ProductFeatures.Query.Requests
 {
     public class GetProductByIdQuery : IRequest<Response<GetProductByIdResponse>>
     {
-        public int Id { get; set; }
-        public GetProductByIdQuery(int id)
-        {
-            Id = id;
-        }
+
+        public int ProductId { get; set; }
+        public int UserId { get; set; }
+
+
     }
 }

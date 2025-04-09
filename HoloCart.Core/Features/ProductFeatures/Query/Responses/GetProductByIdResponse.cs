@@ -9,8 +9,8 @@
         public string MainImageUrl { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public bool IsFavorite { get; set; }
 
-        // Discount Info
         public int? DiscountId { get; set; }
         public string DiscountCode { get; set; }
         public decimal? DiscountPercentage { get; set; }

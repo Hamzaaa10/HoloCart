@@ -9,11 +9,13 @@ namespace HoloCart.Service.Implemintation
     {
         private readonly ICartRepository _cartRepository;
         private readonly IDiscountRepository _discountRepository;
+        private readonly ICartItemRepositry _cartItemRepositry;
 
-        public CartService(ICartRepository cartRepository, IDiscountRepository discountRepository)
+        public CartService(ICartRepository cartRepository, IDiscountRepository discountRepository, ICartItemRepositry cartItemRepositry)
         {
             _cartRepository = cartRepository;
             _discountRepository = discountRepository;
+            _cartItemRepositry = cartItemRepositry;
         }
 
         public async Task<string> ApplyDiscountOnCartValidation(int UserId, string discountCode)
@@ -63,6 +65,24 @@ namespace HoloCart.Service.Implemintation
 
         }
 
+        public async Task<string> ClearCartAsync(int userId)
+        {
+            var Cart = await _cartRepository.GetTableAsTracking().Include(c => c.CartItems)
+                                            .FirstOrDefaultAsync(c => c.ApplicationUserId == userId);
+            if (Cart == null) return "CartNotFound";
+
+            try
+            {
+                await _cartItemRepositry.DeleteRangeAsync(Cart.CartItems);
+                return "Success";
+            }
+            catch (Exception)
+            {
+
+                return "Failed";
+            }
+        }
+
         public async Task<string> CreateCartAsync(Cart cart)
         {
             var existingReview =
@@ -91,8 +111,7 @@ namespace HoloCart.Service.Implemintation
         public async Task<Cart> GetCartByUserIdAsync(int UserId)
         {
 
-
-            var Cart = await _cartRepository.GetTableNoTracking()
+            var Cart = await _cartRepository.GetTableAsTracking()
                                   .Where(x => x.ApplicationUserId == UserId).
                                   Include(x => x.CartItems).ThenInclude(x => x.Product).ThenInclude(x => x.Discount).FirstOrDefaultAsync();
             return Cart;

@@ -1,5 +1,5 @@
 ﻿using HoloCart.Data.Entities;
-using HoloCart.Infrastructure;
+using HoloCart.Infrastructure.AbstractRepository;
 using HoloCart.Service.Abstract;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

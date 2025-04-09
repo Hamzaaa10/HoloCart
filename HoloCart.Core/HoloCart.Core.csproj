@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\OrderFeature\Command\Validations\" />
     <Folder Include="Features\OrderItemFeature\Query\" />
     <Folder Include="Features\PaymentFeature\Query\Responses\" />
     <Folder Include="Features\PaymentFeature\Query\Requests\" />

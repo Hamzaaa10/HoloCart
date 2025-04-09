@@ -131,16 +131,16 @@ namespace HoloCart.Service.Implemintation
             switch (OrderBy)
             {
                 case ProductOrderingEnum.EcsName:
-                    Quareble = Quareble.OrderBy(x => x.Name); // ✅ تصحيح: إعادة تعيين `Quareble`
+                    Quareble = Quareble.OrderBy(x => x.Name);
                     break;
                 case ProductOrderingEnum.DecsName:
-                    Quareble = Quareble.OrderByDescending(x => x.Name); // ✅ تصحيح: إعادة تعيين `Quareble`
+                    Quareble = Quareble.OrderByDescending(x => x.Name);
                     break;
                 case ProductOrderingEnum.FinalPrice:
                     Quareble = Quareble.OrderBy(x => x.BasePrice - (x.Discount != null ? (x.BasePrice * x.Discount.Percentage / 100) : 0)); // ✅ إصلاح مشكلة null
                     break;
                 case ProductOrderingEnum.Discount:
-                    Quareble = Quareble.OrderByDescending(x => x.Discount != null ? x.Discount.Percentage : 0); // ✅ التعامل مع `null`
+                    Quareble = Quareble.OrderByDescending(x => x.Discount != null ? x.Discount.Percentage : 0);
                     break;
             }
 
@@ -163,16 +163,16 @@ namespace HoloCart.Service.Implemintation
             switch (OrderBy)
             {
                 case ProductOrderingEnum.EcsName:
-                    Quareble = Quareble.OrderBy(x => x.Name); // ✅ تصحيح: إعادة تعيين `Quareble`
+                    Quareble = Quareble.OrderBy(x => x.Name);
                     break;
                 case ProductOrderingEnum.DecsName:
-                    Quareble = Quareble.OrderByDescending(x => x.Name); // ✅ تصحيح: إعادة تعيين `Quareble`
+                    Quareble = Quareble.OrderByDescending(x => x.Name);
                     break;
                 case ProductOrderingEnum.FinalPrice:
                     Quareble = Quareble.OrderBy(x => x.BasePrice - (x.Discount != null ? (x.BasePrice * x.Discount.Percentage / 100) : 0)); // ✅ إصلاح مشكلة null
                     break;
                 case ProductOrderingEnum.Discount:
-                    Quareble = Quareble.OrderByDescending(x => x.Discount != null ? x.Discount.Percentage : 0); // ✅ التعامل مع `null`
+                    Quareble = Quareble.OrderByDescending(x => x.Discount != null ? x.Discount.Percentage : 0);
                     break;
             }
             return Quareble;

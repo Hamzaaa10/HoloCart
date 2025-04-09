@@ -19,14 +19,14 @@ namespace HoloCart.API.Controllers
 
 
         [HttpPost(Router.FavouritRouting.Create)]
-        public async Task<IActionResult> AddFavourit([FromForm] AddToFavouritesCommand Command)
+        public async Task<IActionResult> AddFavourit([FromBody] AddToFavouritesCommand Command)
         {
             var Response = await Mediator.Send(Command);
             return Ok(Response);
         }
 
         [HttpDelete(Router.FavouritRouting.Delete)]
-        public async Task<IActionResult> DeleteFavourit([FromForm] RemoveFavouriteCommand Command)
+        public async Task<IActionResult> DeleteFavourit([FromBody] RemoveFavouriteCommand Command)
         {
             var Response = await Mediator.Send(Command);
             return NewResult(Response);

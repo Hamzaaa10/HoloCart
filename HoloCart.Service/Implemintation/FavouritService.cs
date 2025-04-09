@@ -48,6 +48,14 @@ namespace HoloCart.Service.Implemintation
             return FavouritProducts;
         }
 
+        public async Task<List<int>> GetUserFavoriteProductIdsAsync(int userId)
+        {
+            return await _favouritRepository.GetTableNoTracking()
+                        .Where(f => f.ApplicationUserId == userId)
+                        .Select(f => f.ProductId)
+                        .ToListAsync();
+        }
+
         public async Task<bool> IsProductInFavourit(int productId, int UserId)
         {
             return await _favouritRepository.GetTableNoTracking().FirstOrDefaultAsync(x => x.ApplicationUserId == UserId && x.ProductId == productId) == null ? false : true;

@@ -1,4 +1,5 @@
 ﻿using HoloCart.Data.Entities;
+using HoloCart.Infrastructure.AbstractRepository;
 using HoloCart.Infrastructure.Bases;
 using HoloCart.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
