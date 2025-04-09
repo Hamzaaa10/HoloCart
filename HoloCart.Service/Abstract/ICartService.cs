@@ -10,6 +10,8 @@ namespace HoloCart.Service.Abstract
 
         public Task<string> RemoveCartAsync(int CartId);
         public Task<string> ApplyDiscountOnCartValidation(int UserId, string code);
+        public Task<string> ClearCartAsync(int userId);
+
 
 
     }

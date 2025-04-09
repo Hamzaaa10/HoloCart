@@ -32,9 +32,9 @@ namespace HoloCart.API.Controllers
             return Ok(Response);
         }
         [HttpGet(Router.ProductRouting.GetById)]
-        public async Task<IActionResult> GetCategoryByIdAsync(int id)
+        public async Task<IActionResult> GetCategoryByIdAsync([FromQuery] GetProductByIdQuery query)
         {
-            var Response = await Mediator.Send(new GetProductByIdQuery(id));
+            var Response = await Mediator.Send(query);
             return NewResult(Response);
         }
         [HttpPost(Router.ProductRouting.Create)]

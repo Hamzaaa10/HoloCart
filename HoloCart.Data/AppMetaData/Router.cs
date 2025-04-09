@@ -76,7 +76,7 @@
             public const string Prefix = Rule + "Favourit";
             public const string GetAll = Prefix + "/user" + "/{id}";
             public const string Create = Prefix + "/Create";
-            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string Delete = Prefix + "/Delete";
         }
         public static class ProductRouting
         {
@@ -85,7 +85,7 @@
             public const string Create = Prefix + "/Create";
             public const string Delete = Prefix + "/Delete";
             public const string Update = Prefix + "/Update";
-            public const string GetById = Prefix + "/GetById" + "/{id}";
+            public const string GetById = Prefix + "/GetById";
             public const string Paginated = Prefix + "/Paginated";
             public const string ProductsByCategory = Prefix + "/ProductsByCategory";
             public const string PaginatedByDiscount = Prefix + "/ProductsByDiscount";
@@ -162,6 +162,15 @@
             public const string Update = Prefix + "/Update";
             public const string GetAll = Prefix + "/GetAll";
             public const string GetById = Prefix + "/{id}";
+        }
+        public static class OrderRouting
+        {
+            public const string Prefix = Rule + "Orders";
+            public const string Create = Prefix + "/Create";
+            public const string Delete = Prefix + "/Delete" + "/{id}";
+            public const string GetById = Prefix + "/{id}";
+
+
         }
     }
 }

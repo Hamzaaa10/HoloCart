@@ -6,6 +6,7 @@ namespace HoloCart.Core.Features.ProductFeatures.Query.Requests
 {
     public class GetAllProductsWithDiscountQuery : IRequest<PaginatedResult<GetAllProductsWithDiscountResponse>>
     {
+        public int ApplicationUserId { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public string? SearchBy { get; set; }

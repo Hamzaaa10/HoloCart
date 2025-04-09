@@ -11,6 +11,7 @@ namespace HoloCart.Core.Mapping.ProductMapping
             CreateMap<Product, GetAllProductsWithDiscountResponse>()
                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.CategoryId))
                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+
                .ForMember(dest => dest.DiscountId, opt => opt.MapFrom(src => src.Discount.DiscountId))
                .ForMember(dest => dest.DiscountCode, opt => opt.MapFrom(src => src.Discount.Code))
                .ForMember(dest => dest.DiscountPercentage, opt => opt.MapFrom(src => src.Discount.Percentage))
@@ -18,7 +19,8 @@ namespace HoloCart.Core.Mapping.ProductMapping
                 src.Discount != null && DateTime.UtcNow >= src.Discount.StartDate && DateTime.UtcNow <= src.Discount.EndDate
                     ? src.BasePrice - (src.BasePrice * src.Discount.Percentage / 100)
                     : src.BasePrice
-               ));
+               ))
+               ;
 
             CreateMap<Review, ReviewDto>()
                        .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
