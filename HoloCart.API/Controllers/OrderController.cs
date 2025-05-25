@@ -2,11 +2,13 @@
 using HoloCart.Core.Features.OrderFeature.Command.Requests;
 using HoloCart.Core.Features.OrderFeature.Query.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoloCart.API.Controllers
 {
     [ApiController]
+    [Authorize]
     public class OrderController : AppControllerBase
     {
         [HttpPost(Router.OrderRouting.Create)]

@@ -6,6 +6,8 @@
         public int ProductId { get; set; }
         public string ColorName { get; set; }
         public string ColorHex { get; set; }
+        public int Stock { get; set; }
+
 
         // Instead of just ProductImageId, include full image details
         public ProductImageResponseDto Image { get; set; }

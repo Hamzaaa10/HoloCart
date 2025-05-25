@@ -9,7 +9,8 @@
 
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
-
+        public int? ProductColorId { get; set; } // <- Add this
+        public virtual ProductColor ProductColor { get; set; }
         public int Quantity { get; set; }
     }
 }

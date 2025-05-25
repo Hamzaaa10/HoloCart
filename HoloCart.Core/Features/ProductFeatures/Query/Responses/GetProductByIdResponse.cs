@@ -26,6 +26,8 @@
         public string ColorName { get; set; }
         public string ColorHex { get; set; }
         public string ImageUrl { get; set; }
+        public int Stock { get; set; }
+
     }
     public class ReviewDto
     {

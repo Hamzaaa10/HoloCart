@@ -3,6 +3,7 @@ using HoloCart.Core.Features.Authentication.Commands.Requests;
 using HoloCart.Core.Features.Authentication.Queries.Requests;
 using HoloCart.Data.AppMetaData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace HoloCart.API.Controllers
 {
@@ -15,6 +16,7 @@ namespace HoloCart.API.Controllers
             var response = await Mediator.Send(request);
             return NewResult(response);
         }*/
+        [EnableRateLimiting("LoginPolicy")]
         [HttpPost(Router.AuthenticationRouting.SignIn)]
         public async Task<IActionResult> SignIn([FromForm] SignInRequest Command)
         {

@@ -2,12 +2,14 @@
 using HoloCart.Core.Features.ReviewFeatures.Command.Requests;
 using HoloCart.Core.Features.ReviewFeatures.Query.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static HoloCart.Core.Features.ReviewFeatures.Command.Requests.UpdateReviewCommnd;
 
 namespace HoloCart.API.Controllers
 {
     [ApiController]
+    [Authorize]
     public class ReviewController : AppControllerBase
     {
         [HttpGet(Router.ReviewRouting.ReviewsWithProduct)]

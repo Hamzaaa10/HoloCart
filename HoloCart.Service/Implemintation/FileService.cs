@@ -27,25 +27,30 @@ namespace HoloCart.Service.Implemintation
 
         #endregion
         #region Handle Functions
-        public async Task<string> UploadImage(string Location, IFormFile file)
+        public async Task<string> UploadImage(string location, IFormFile file)
         {
-            var path = _webHostEnvironment.WebRootPath + "/" + Location + "/";
-            var extention = Path.GetExtension(file.FileName);
-            var fileName = Guid.NewGuid().ToString().Replace("-", string.Empty) + extention;
+            var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, location);
+            var extension = Path.GetExtension(file.FileName);
+            var fileName = Guid.NewGuid().ToString("N") + extension; // no dashes
+
             if (file.Length > 0)
             {
                 try
                 {
-                    if (!Directory.Exists(path))
+                    if (!Directory.Exists(uploadPath))
                     {
-                        Directory.CreateDirectory(path);
+                        Directory.CreateDirectory(uploadPath);
                     }
-                    using (FileStream filestreem = File.Create(path + fileName))
+
+                    var fullFilePath = Path.Combine(uploadPath, fileName);
+
+                    using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
                     {
-                        await file.CopyToAsync(filestreem);
-                        await filestreem.FlushAsync();
-                        return $"/{Location}/{fileName}";
+                        await file.CopyToAsync(fileStream);
                     }
+
+                    var relativePath = $"{location}/{fileName}".Replace("\\", "/");
+                    return "/" + relativePath; // always start with "/"
                 }
                 catch (Exception)
                 {
@@ -57,11 +62,13 @@ namespace HoloCart.Service.Implemintation
                 return "NoImage";
             }
         }
+
+
         public async Task<bool> DeleteImage(string imageUrl)
         {
             try
             {
-                var filePath = imageUrl.Replace(_baseUrl, "").TrimStart('/');
+                var filePath = imageUrl.Replace(_baseUrl, "").TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString());
                 var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, filePath);
 
                 if (File.Exists(fullPath))

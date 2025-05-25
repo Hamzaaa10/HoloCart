@@ -2,11 +2,15 @@
 using HoloCart.Core.Features.ProductFeatures.Command.Requests;
 using HoloCart.Core.Features.ProductFeatures.Query.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace HoloCart.API.Controllers
 {
     [ApiController]
+    [EnableRateLimiting("ProductBrowsingPolicy")]
+
     public class ProductController : AppControllerBase
     {
         [HttpGet(Router.ProductRouting.PaginatedByDiscount)]
@@ -37,18 +41,22 @@ namespace HoloCart.API.Controllers
             var Response = await Mediator.Send(query);
             return NewResult(Response);
         }
+        [Authorize(Roles = "Admin")]
+
         [HttpPost(Router.ProductRouting.Create)]
         public async Task<IActionResult> Create([FromForm] CreateProductCommand Command)
         {
             var Response = await Mediator.Send(Command);
             return Ok(Response);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut(Router.ProductRouting.Update)]
         public async Task<IActionResult> Update([FromForm] UpdateProductCommand Command)
         {
             var Response = await Mediator.Send(Command);
             return Ok(Response);
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete(Router.ProductRouting.Delete)]
         public async Task<IActionResult> Delete(int id)
         {

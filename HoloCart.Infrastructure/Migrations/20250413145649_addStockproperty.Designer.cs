@@ -4,6 +4,7 @@ using HoloCart.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HoloCart.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413145649_addStockproperty")]
+    partial class addStockproperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +61,6 @@ namespace HoloCart.Infrastructure.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductColorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -70,8 +70,6 @@ namespace HoloCart.Infrastructure.Migrations
                     b.HasKey("CartItemId");
 
                     b.HasIndex("CartId");
-
-                    b.HasIndex("ProductColorId");
 
                     b.HasIndex("ProductId");
 
@@ -695,10 +693,6 @@ namespace HoloCart.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HoloCart.Data.Entities.ProductColor", "ProductColor")
-                        .WithMany()
-                        .HasForeignKey("ProductColorId");
-
                     b.HasOne("HoloCart.Data.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
@@ -708,8 +702,6 @@ namespace HoloCart.Infrastructure.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
-
-                    b.Navigation("ProductColor");
                 });
 
             modelBuilder.Entity("HoloCart.Data.Entities.Category", b =>

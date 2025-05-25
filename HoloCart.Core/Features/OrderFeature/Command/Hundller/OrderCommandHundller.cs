@@ -13,12 +13,14 @@ namespace HoloCart.Core.Features.OrderFeature.Command.Hundller
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
         private readonly ICartService _cartService;
+        private readonly IProductColorService _productColorService;
 
-        public OrderCommandHundller(IOrderService orderService, IMapper mapper, ICartService cartService)
+        public OrderCommandHundller(IOrderService orderService, IMapper mapper, ICartService cartService, IProductColorService productColorService)
         {
             _orderService = orderService;
             _mapper = mapper;
             _cartService = cartService;
+            _productColorService = productColorService;
         }
         public async Task<Response<string>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
@@ -34,6 +36,19 @@ namespace HoloCart.Core.Features.OrderFeature.Command.Hundller
             order.ShippingAddressId = request.ShippingAddressId;
             var beforDisscountCopon = order.OrderItems.Sum(oi => oi.UnitPrice * oi.Quantity);
             order.TotalAmount = cart.DiscountCode != null ? beforDisscountCopon - (beforDisscountCopon * (cart.DiscountPercentage / 100)) : beforDisscountCopon;
+
+            foreach (var item in cart.CartItems)
+            {
+                if (item.ProductColorId == null)
+                    return BadRequest<string>("Product color is required.");
+
+                var color = await _productColorService.GetProductColorById(item.ProductColorId.Value);
+                if (color == null || color.Stock < item.Quantity)
+                    return BadRequest<string>($"Insufficient stock for color of product ID {item.ProductId}");
+
+                color.Stock -= item.Quantity;
+                await _productColorService.UpdateProductColorAsync(color);
+            }
 
             var createdOrder = await _orderService.AddOrderAsync(order);
 
