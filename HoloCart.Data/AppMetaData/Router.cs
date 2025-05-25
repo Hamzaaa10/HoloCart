@@ -107,6 +107,7 @@
             public const string Update = Prefix + "/Update";
             public const string GetAll = Prefix + "/GetAll";
             public const string GetById = Prefix + "/GetById" + "/{id}";
+            public const string GetByUserId = Prefix + "/User" + "/{UserId}";
         }
 
         public static class PaymentRouting

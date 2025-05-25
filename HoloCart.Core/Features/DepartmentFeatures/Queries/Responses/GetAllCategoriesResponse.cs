@@ -2,5 +2,7 @@
 {
     public class GetAllCategoriesResponse : GetCategoryByIdResponse
     {
+        public int CategoryId { get; set; }
+
     }
 }

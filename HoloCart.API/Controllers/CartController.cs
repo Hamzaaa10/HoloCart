@@ -2,13 +2,18 @@
 using HoloCart.Core.Features.CartFeatures.Command.Requests;
 using HoloCart.Core.Features.CartFeatures.Query.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace HoloCart.API.Controllers
 {
     [ApiController]
+    [Authorize]
+    [EnableRateLimiting("CartAndWishlistPolicy")]
     public class CartController : AppControllerBase
     {
+        // [Authorize(Roles = "Admin")]
         [HttpPost(Router.CartRouting.Create)]
         public async Task<IActionResult> Create([FromForm] CreateCartCommand Command)
         {
@@ -21,8 +26,9 @@ namespace HoloCart.API.Controllers
             var Response = await Mediator.Send(new GetCartByUserIdQuery(id));
             return NewResult(Response);
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete(Router.CartRouting.Delete)]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Response = await Mediator.Send(new RemoveCartCommand(id));
             return NewResult(Response);

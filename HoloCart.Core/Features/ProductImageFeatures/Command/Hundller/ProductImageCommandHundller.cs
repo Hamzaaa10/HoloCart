@@ -13,14 +13,21 @@ namespace HoloCart.Core.Features.ProductImageFeatures.Command.Hundller
     {
         private readonly IMapper _mapper;
         private readonly IProductImageService _productImageService;
+        private readonly IProductColorService _productColorService;
 
-        public ProductImageCommandHundller(IMapper mapper, IProductImageService productImageService)
+        public ProductImageCommandHundller(IMapper mapper, IProductImageService productImageService, IProductColorService productColorService)
         {
             _mapper = mapper;
             _productImageService = productImageService;
+            _productColorService = productColorService;
         }
         public async Task<Response<string>> Handle(CreateProductImageCommand request, CancellationToken cancellationToken)
         {
+            var existingColor = await _productColorService.GetProductColorById(request.ProductColorId);
+            if (existingColor == null)
+            {
+                return BadRequest<string>("ProductColor is not exists");
+            }
             var ProductImage = _mapper.Map<ProductImage>(request);
             var Result = await _productImageService.AddProductAsync(ProductImage, request.ImageUrl);
             switch (Result)
@@ -29,11 +36,12 @@ namespace HoloCart.Core.Features.ProductImageFeatures.Command.Hundller
                 case "FailedToUploadImage": return BadRequest<string>("FailedToUploadImage");
                 case "FailedInAdd": return BadRequest<string>("AddFailed");
             }
-            return Success("Product Added Successufully");
+            return Success("ProductImage Added Successufully");
         }
 
         public async Task<Response<string>> Handle(DeleteProductImageCommand request, CancellationToken cancellationToken)
         {
+
             var Result = await _productImageService.DeleteProductAsync(request.ProductImageId);
             switch (Result)
             {

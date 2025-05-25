@@ -2,6 +2,7 @@
 using HoloCart.Core.Features.ApplicationUserFeatures.Commands.Requests;
 using HoloCart.Core.Features.ApplicationUserFeatures.Queries.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoloCart.API.Controllers
@@ -10,12 +11,12 @@ namespace HoloCart.API.Controllers
     public class AplicationUserContoller : AppControllerBase
     {
         [HttpGet(Router.ApplicationUserRouting.GetByID)]
-        public async Task<IActionResult> GetStudentListAsync(int id)
+        public async Task<IActionResult> GetUserByIdAsync(int id)
         {
             var Response = await Mediator.Send(new GetApplicationUserByIdRequest(id));
             return NewResult(Response);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet(Router.ApplicationUserRouting.Paginated)]
         public async Task<IActionResult> Paginated([FromQuery] GetApplicationUsersPaginatedRequest Query)
         {
@@ -42,7 +43,7 @@ namespace HoloCart.API.Controllers
             var Response = await Mediator.Send(command);
             return NewResult(Response);
         }
-
+        [Authorize]
         [HttpDelete(Router.ApplicationUserRouting.Delete)]
         public async Task<IActionResult> Delete(int id)
         {

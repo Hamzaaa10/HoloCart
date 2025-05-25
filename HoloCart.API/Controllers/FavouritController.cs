@@ -2,11 +2,16 @@
 using HoloCart.Core.Features.FavouriteFeatures.Command.Requests;
 using HoloCart.Core.Features.FavouriteFeatures.Query.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace HoloCart.API.Controllers
 {
+
     [ApiController]
+    [Authorize]
+    [EnableRateLimiting("CartAndWishlistPolicy")]
     public class FavouritController : AppControllerBase
     {
 

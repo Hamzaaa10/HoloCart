@@ -32,8 +32,7 @@ namespace HoloCart.Core.Features.ProductImageFeatures.Command.Validations
         }
         public void ApplayCustomValidationrules()
         {
-            RuleFor(x => x.ProductColorId)
-                 .MustAsync(async (key, CancellationToken) => await _productColorService.GetProductColorById(key) != null).WithMessage("ProductColor is Not existes");
+
         }
 
     }

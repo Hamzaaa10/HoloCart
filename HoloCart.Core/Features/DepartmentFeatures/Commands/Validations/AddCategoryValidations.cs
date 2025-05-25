@@ -17,8 +17,8 @@ namespace HoloCart.Core.Features.DepartmentFeatures.Commands.Validations
 
         public void ApplayValidationrules()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("CategoryImage is requierd")
-                                .NotNull().WithMessage("CategoryImage can't be nulll");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("CategoryName is requierd")
+                                .NotNull().WithMessage("CategoryName can't be nulll");
 
             RuleFor(x => x.CategoryImage).NotEmpty().WithMessage("CategoryImage is requierd")
                                     .NotNull().WithMessage("CategoryImage can't be nulll");

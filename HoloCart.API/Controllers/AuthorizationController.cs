@@ -3,11 +3,12 @@ using HoloCart.Core.Features.Authorization.Commands.Requests;
 using HoloCart.Core.Features.Authorization.Queries.Requests;
 using HoloCart.Core.Features.Authorization.Queries.Responses;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoloCart.API.Controllers
 {
-
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class AuthorizationController : AppControllerBase
     {

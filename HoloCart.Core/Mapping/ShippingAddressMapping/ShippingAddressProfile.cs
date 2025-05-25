@@ -10,6 +10,7 @@ namespace HoloCart.Core.Mapping.ShippingAddressMapping
             UpdateShippingAddressMapping();
             GetAllShippingAddressMapping();
             GetShippingAddressByIdMapping();
+            GetShippingAddressByUserIdMapping();
         }
     }
 }

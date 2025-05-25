@@ -91,7 +91,7 @@ namespace HoloCart.Service.Implemintation
              audience: _jwtsettings.Audience,
              claims: await GetClaims(user),
              notBefore: DateTime.Now,
-             expires: DateTime.Now.AddMinutes(_jwtsettings.AccessTokenExpireDate),
+             expires: DateTime.Now.AddMonths(_jwtsettings.AccessTokenExpireDate),
              signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtsettings.Secret)), SecurityAlgorithms.HmacSha256Signature)
              );
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
@@ -109,7 +109,7 @@ namespace HoloCart.Service.Implemintation
                 JwtId = jwtToken.Id,
                 IsRevoked = false,
                 IsUsed = false,
-                ExpiryDate = DateTime.UtcNow.AddDays(_jwtsettings.RefreshTokenExpireDate),
+                ExpiryDate = DateTime.UtcNow.AddMonths(_jwtsettings.RefreshTokenExpireDate),
                 AddedTime = DateTime.UtcNow,
                 Token = accessToken,
                 RefreshToken = stringrefreshtoken,

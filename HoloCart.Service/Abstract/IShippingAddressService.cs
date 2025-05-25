@@ -9,6 +9,7 @@ namespace HoloCart.Service.Abstract
         public Task<string> DeleteShippingAddressAsync(int id);
         public Task<ShippingAddress> GetShippingAddressById(int id);
         public Task<List<ShippingAddress>> GetAllShippingAddressAcync();
+        public Task<List<ShippingAddress>> GetShippingAddressesByUserId(int userId);
 
     }
 }

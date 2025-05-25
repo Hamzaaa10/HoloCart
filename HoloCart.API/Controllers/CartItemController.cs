@@ -1,11 +1,14 @@
 ﻿using HoloCart.API.Base;
 using HoloCart.Core.Features.CartItemFeature.Command.Requests;
 using HoloCart.Data.AppMetaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoloCart.API.Controllers
 {
     [ApiController]
+    [Authorize]
+
     public class CartItemController : AppControllerBase
     {
         [HttpPost(Router.CartItemRouting.Create)]
