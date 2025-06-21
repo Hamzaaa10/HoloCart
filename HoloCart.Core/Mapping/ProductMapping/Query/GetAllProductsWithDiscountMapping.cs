@@ -11,7 +11,8 @@ namespace HoloCart.Core.Mapping.ProductMapping
             CreateMap<Product, GetAllProductsWithDiscountResponse>()
                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.CategoryId))
                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-
+               .ForMember(dest => dest.ModelUrl, opt => opt.MapFrom(src => src.Model))
+               .ForMember(dest => dest.IsModel3D, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Model)))
                .ForMember(dest => dest.DiscountId, opt => opt.MapFrom(src => src.Discount.DiscountId))
                .ForMember(dest => dest.DiscountCode, opt => opt.MapFrom(src => src.Discount.Code))
                .ForMember(dest => dest.DiscountPercentage, opt => opt.MapFrom(src => src.Discount.Percentage))

@@ -53,7 +53,7 @@ namespace HoloCart.Service.Implemintation
             var claims = new List<Claim>() {
                 new Claim(nameof(UserClaimsModel.Email), user.Email)  ,
                 new Claim(nameof(UserClaimsModel.UserName), user.UserName),
-                new Claim(nameof(UserClaimsModel.PhoneNumber), user.PhoneNumber),
+                new Claim(nameof(UserClaimsModel.PhoneNumber), user.PhoneNumber ?? string.Empty),
                 new Claim(nameof(UserClaimsModel.Id), user.Id.ToString())
                 };
             claims.AddRange(UserClaims);
@@ -287,19 +287,64 @@ namespace HoloCart.Service.Implemintation
 
         public async Task<JwtAuthResponse> LoginWithGoogle(string googleToken)
         {
+            Console.WriteLine("🔍 LoginWithGoogle started");
+
             var payload = await VerifyGoogleToken(googleToken);
             if (payload == null)
-                throw new Exception("Invalid Google Token");
+            {
+                Console.WriteLine("❌ payload is null");
+                return null;
+            }
+
+            Console.WriteLine("📧 Payload Email: " + payload.Email);
+            Console.WriteLine("👤 Payload Name: " + payload.Name);
+            Console.WriteLine("🖼️ Payload Picture: " + payload.Picture);
+
+            if (string.IsNullOrEmpty(payload.Email))
+            {
+                Console.WriteLine("❌ Missing email in Google token.");
+                return null;
+            }
 
             var user = await _userManager.FindByEmailAsync(payload.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = payload.Email, UserName = payload.Email };
-                await _userManager.CreateAsync(user);
+                user = new ApplicationUser
+                {
+                    Email = payload.Email,
+                    UserName = payload.Email,
+                    FullName = payload.Name ?? "Google User",
+                    ProfileImage = payload.Picture,
+                    EmailConfirmed = true // Automatically confirm email for Google users
+                };
+
+                Console.WriteLine("🛠️ Creating new user: " + JsonConvert.SerializeObject(user));
+
+                var result = await _userManager.CreateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    Console.WriteLine("❌ Failed to create user: " + string.Join(" | ", result.Errors.Select(e => e.Description)));
+                    return null;
+                }
+                else
+                {
+                    Console.WriteLine("✅ User created successfully");
+                }
+            }
+            else
+            {
+                Console.WriteLine("✅ User already exists");
             }
 
-            return await GetJWTtoken(user);
+            var tokenResult = await GetJWTtoken(user);
+            Console.WriteLine("✅ Token generated");
+
+            return tokenResult;
         }
+
+
+
 
         public async Task<JwtAuthResponse> LoginWithFacebook(string facebookToken)
         {
@@ -310,8 +355,20 @@ namespace HoloCart.Service.Implemintation
             var user = await _userManager.FindByEmailAsync(fbUser.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = fbUser.Email, UserName = fbUser.Email };
-                await _userManager.CreateAsync(user);
+                user = new ApplicationUser
+                {
+                    Email = fbUser.Email,
+                    UserName = fbUser.Email,
+                    FullName = fbUser.Name ?? "Facebook User",
+                    EmailConfirmed = true // Facebook يوفر بريد مؤكد
+                };
+
+                var result = await _userManager.CreateAsync(user);
+                if (!result.Succeeded)
+                {
+                    Console.WriteLine(" Failed to create user: " + string.Join(" | ", result.Errors.Select(e => e.Description)));
+                    return null;
+                }
             }
 
             return await GetJWTtoken(user);
@@ -323,19 +380,44 @@ namespace HoloCart.Service.Implemintation
             {
                 Audience = new List<string> { _externalAuthenticationSetting.GoogleClientId }
             };
-            var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
+
+            var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, settings);
             Console.WriteLine($"Token Audience: {string.Join(", ", payload.Audience)}");
             Console.WriteLine($"Expected Audience: {_externalAuthenticationSetting.GoogleClientId}");
-            return await GoogleJsonWebSignature.ValidateAsync(idToken, settings);
+            return payload;
         }
 
         private async Task<FacebookUserData> VerifyFacebookToken(string accessToken)
         {
-            var url = $"https://graph.facebook.com/me?fields=id,name,email&access_token={accessToken}";
-            var response = await _httpClient.GetStringAsync(url);
+            try
+            {
+                var url = $"https://graph.facebook.com/me?fields=id,name,email&access_token={accessToken}";
+                var response = await _httpClient.GetAsync(url);
 
-            return JsonConvert.DeserializeObject<FacebookUserData>(response);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"❌ Facebook token verification failed. Status: {response.StatusCode}");
+                    return null;
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                var fbUser = JsonConvert.DeserializeObject<FacebookUserData>(content);
+
+                if (string.IsNullOrEmpty(fbUser?.Email))
+                {
+                    Console.WriteLine("⚠️ Facebook response missing email.");
+                    return null;
+                }
+
+                return fbUser;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Exception during Facebook token verification: {ex.Message}");
+                return null;
+            }
         }
+
 
         /* private async Task<JwtAuthResponse> GenerateJwtToken(ApplicationUser user)
          {

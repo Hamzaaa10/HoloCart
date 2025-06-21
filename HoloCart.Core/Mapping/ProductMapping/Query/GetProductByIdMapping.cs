@@ -8,6 +8,8 @@ namespace HoloCart.Core.Mapping.ProductMapping
         public void GetProductByIdMapping()
         {
             CreateMap<Product, GetProductByIdResponse>()
+               .ForMember(dest => dest.ModelUrl, opt => opt.MapFrom(src => src.Model))
+               .ForMember(dest => dest.IsModel3D, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Model)))
                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.CategoryId))
                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
                .ForMember(dest => dest.DiscountId, opt => opt.MapFrom(src => src.Discount.DiscountId))
@@ -22,7 +24,7 @@ namespace HoloCart.Core.Mapping.ProductMapping
             CreateMap<ProductColor, ProductColorDto>()
               .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Image != null ? src.Image.ImageUrl : null));
             CreateMap<Review, ReviewDto>()
-                       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
+              .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
 
 
         }

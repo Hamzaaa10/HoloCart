@@ -18,10 +18,12 @@ namespace HoloCart.Core.Features.Authentication.Commands.Handllers
         public async Task<Response<JwtAuthResponse>> Handle(LoginWithGoogleRequest request, CancellationToken cancellationToken)
         {
             var result = await _authenticationService.LoginWithGoogle(request.GoogleToken);
+
             if (result == null)
-                return BadRequest<JwtAuthResponse>("Invalid Google Token");
+                return BadRequest<JwtAuthResponse>("Invalid Google Token or User creation failed");
 
             return Success(result);
         }
+
     }
 }

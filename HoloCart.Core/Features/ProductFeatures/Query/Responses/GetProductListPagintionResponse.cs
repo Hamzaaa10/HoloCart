@@ -7,6 +7,9 @@
         public string Description { get; set; }
         public decimal BasePrice { get; set; }
         public string MainImageUrl { get; set; }
+        public string? ModelUrl { get; set; } // Optional 3D model file
+        public bool IsModel3D { get; set; }
+
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public bool IsFavorite { get; set; }

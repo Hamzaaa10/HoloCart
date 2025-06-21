@@ -1,4 +1,5 @@
 ﻿using HoloCart.Data.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace HoloCart.Data.Entities
 {
@@ -9,6 +10,10 @@ namespace HoloCart.Data.Entities
         public int ApplicationUserId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
+        // NEW: Stripe Payment Intent ID
+        [MaxLength(100)]
+        public string? PaymentIntentId { get; set; }
+
 
         // FK to ShippingAddress
         public int ShippingAddressId { get; set; }

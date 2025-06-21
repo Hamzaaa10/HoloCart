@@ -6,6 +6,8 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal BasePrice { get; set; }
+        public string? Model { get; set; }
+
 
         // Main image used on product listing
         public string MainImageUrl { get; set; }

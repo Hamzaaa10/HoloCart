@@ -5,5 +5,7 @@ namespace HoloCart.Infrastructure.AbstractRepository
 {
     public interface IProductRepository : IGenericRepositoryAsync<Product>
     {
+        Task<Product?> GetLastAddedProductAsync();
+
     }
 }

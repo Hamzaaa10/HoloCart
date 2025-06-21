@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📢 SignalR Product Notification Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #cc0066;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #fff;
+            border-left: 5px solid #28a745;
+            margin: 10px 0;
+            padding: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+            li:hover {
+                background-color: #eafaf1;
+            }
+    </style>
+</head>
+<body>
+    <h1>📢 SignalR: New Product Created</h1>
+    <ul id="messagesList"></ul>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationHub")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.on("NewProductCreated", (product) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>${product.name}</strong> – $${product.basePrice}<br><small>${product.description}</small>`;
+            document.getElementById("messagesList").prepend(li);
+        });
+
+        connection.start()
+            .then(() => console.log("✅ Connected to SignalR Hub"))
+            .catch(err => console.error("❌ SignalR Error:", err));
+    </script>
+</body>
+</html>

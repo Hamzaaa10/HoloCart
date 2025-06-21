@@ -15,5 +15,12 @@ namespace HoloCart.Infrastructure.ImplemintationRepository
 
             _products = dbContext.Set<Product>();
         }
+
+        public async Task<Product?> GetLastAddedProductAsync()
+        {
+            return await _products
+        .OrderByDescending(p => p.ProductId)
+        .FirstOrDefaultAsync();
+        }
     }
 }

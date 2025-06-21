@@ -11,6 +11,8 @@ namespace HoloCart.Core.Features.ProductFeatures.Command.Requests
         public string Description { get; set; }
         public decimal BasePrice { get; set; }
         public IFormFile MainImageUrl { get; set; }
+        public IFormFile? Model { get; set; }
+
         public int CategoryId { get; set; }
         public int? DiscountId { get; set; }
     }

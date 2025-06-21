@@ -1,11 +1,14 @@
 ﻿using HoloCart.Core;
 using HoloCart.Core.Middleware;
 using HoloCart.Data.Entities.Identity;
+using HoloCart.Data.Helpers;
 using HoloCart.Infrastructure;
 using HoloCart.Infrastructure.Context;
+using HoloCart.Infrastructure.Hubs;
 using HoloCart.Infrastructure.Seeder;
 using HoloCart.Service;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.RateLimiting;
 
@@ -23,6 +26,7 @@ builder.Services.AddInfrasractureDebendancies()
     .AddServiceDebendancies()
     .AddServiceRegistration(builder.Configuration);
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 builder.Services.AddRateLimiter(options =>
 {
     options.AddPolicy("ProductBrowsingPolicy", context =>
@@ -70,6 +74,13 @@ builder.WebHost.UseSetting("detailedErrors", "true");
 builder.WebHost.CaptureStartupErrors(true);
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
+// Stripe Settings
+builder.Services.Configure<StripeSettings>(
+    builder.Configuration.GetSection("StripeSettings"));
+
+// Stripe API Key Configuration
+var stripeSettings = builder.Configuration.GetSection("StripeSettings").Get<StripeSettings>();
+Stripe.StripeConfiguration.ApiKey = stripeSettings.SecretKey;
 
 #region AllowCORS
 var CORS = "_cors";
@@ -109,11 +120,18 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 //app.UseHttpsRedirection();
 app.UseCors(CORS);
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".glb"] = "model/gltf-binary";
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider
+});
 //app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "Swagger Demo"));
+app.MapHub<NotificationHub>("/notificationHub");
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseStaticFiles();
 app.UseRateLimiter();
 app.MapControllers();
 

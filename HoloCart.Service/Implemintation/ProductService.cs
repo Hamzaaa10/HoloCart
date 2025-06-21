@@ -25,27 +25,42 @@ namespace HoloCart.Service.Implemintation
             _httpContextAccessor = httpContextAccessor;
             _webHostEnvironment = webHostEnvironment;
         }
-        public async Task<string> AddProductAsync(Product product, IFormFile file)
+        public async Task<(string Status, Product? Product)> AddProductAsync(Product product, IFormFile file, IFormFile? model)
         {
             var context = _httpContextAccessor.HttpContext.Request;
             var baseUrl = context.Scheme + "://" + context.Host;
+
             var imageUrl = await _fileService.UploadImage("Products", file);
             switch (imageUrl)
             {
-                case "NoImage": return "NoImage";
-                case "FailedToUploadImage": return "FailedToUploadImage";
+                case "NoImage": return ("NoImage_Main", null);
+                case "FailedToUploadImage": return ("FailedToUpload_Main", null);
             }
             product.MainImageUrl = baseUrl + imageUrl;
+
+            if (model != null)
+            {
+                var modelUrl = await _fileService.UploadImage("Products/Models", model);
+                switch (modelUrl)
+                {
+                    case "NoImage": return ("NoModel", null);
+                    case "FailedToUploadImage": return ("FailedToUpload_Model", null);
+                }
+                product.Model = baseUrl + modelUrl;
+            }
+
             try
             {
                 await _productRepository.AddAsync(product);
-                return "Success";
+                return ("Success", product); // ✅ return product
             }
-            catch (Exception)
+            catch
             {
-                return "FailedInAdd";
+                return ("FailedInAdd", null);
             }
         }
+
+
 
         public async Task<string> DeleteProductAsync(int id)
         {
@@ -74,13 +89,15 @@ namespace HoloCart.Service.Implemintation
              return await _productRepository.GetTableNoTracking().Include(x => x.Category).Include(x => x.Discount).Include(x => x.Colors).ThenInclude(x => x.Image).ToListAsync();
          }
  */
-        public async Task<string> UpdateProductAsync(int id, Product product, IFormFile file)
+        public async Task<string> UpdateProductAsync(int id, Product product, IFormFile file, IFormFile model)
         {
             var context = _httpContextAccessor.HttpContext.Request;
             var baseUrl = context.Scheme + "://" + context.Host;
+
+            // Handle image update
             if (file != null && file.Length > 0)
             {
-                // **Delete old image if exists**
+                // Delete old image if exists
                 if (!string.IsNullOrEmpty(product.MainImageUrl))
                 {
                     var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath,
@@ -91,18 +108,42 @@ namespace HoloCart.Service.Implemintation
                         File.Delete(oldImagePath);
                     }
                 }
+
                 var imageUrl = await _fileService.UploadImage("Products", file);
                 switch (imageUrl)
                 {
-                    case "NoImage": return "NoImage";
-                    case "FailedToUploadImage": return "FailedToUploadImage";
+                    case "NoImage": return "NoImage_Main";
+                    case "FailedToUploadImage": return "FailedToUpload_Main";
                 }
+
                 product.MainImageUrl = baseUrl + imageUrl;
             }
-            else
+
+            // Handle model file update
+            if (model != null && model.Length > 0)
             {
-                product.MainImageUrl = product.MainImageUrl; // Retain old image if no new file
+                // Delete old model file if exists
+                if (!string.IsNullOrEmpty(product.Model))
+                {
+                    var oldModelPath = Path.Combine(_webHostEnvironment.WebRootPath,
+                        product.Model.Replace(baseUrl, "").TrimStart('/'));
+
+                    if (File.Exists(oldModelPath))
+                    {
+                        File.Delete(oldModelPath);
+                    }
+                }
+
+                var modelUrl = await _fileService.UploadImage("Products/Models", model);
+                switch (modelUrl)
+                {
+                    case "NoImage": return "NoModel";
+                    case "FailedToUploadImage": return "FailedToUpload_Model";
+                }
+
+                product.Model = baseUrl + modelUrl;
             }
+
             try
             {
                 await _productRepository.UpdateAsync(product);
@@ -112,8 +153,8 @@ namespace HoloCart.Service.Implemintation
             {
                 return "FailedInUpdate";
             }
-
         }
+
         public IQueryable<Product> GetProductsQuarable(string Search, ProductOrderingEnum OrderBy)
         {
             var Quareble = _productRepository
@@ -195,6 +236,10 @@ namespace HoloCart.Service.Implemintation
             return Quareble;
         }
 
+        public async Task<Product> GetLastAddedProductAsync()
+        {
+            return await _productRepository.GetLastAddedProductAsync();
+        }
     }
 }
 

@@ -1,10 +1,11 @@
-﻿using HoloCart.Data.Entities;
+﻿using Stripe;
 
 namespace HoloCart.Service.Abstract
 {
     public interface IPaymentService
     {
-        public Task<string> AddPaymentAsync(Payment payment);
+        Task<PaymentIntent?> CreateOrUpdatePaymentIntent(int userId);
+        Task<PaymentIntent?> GetPaymentIntentByUserId(int userId);
 
     }
 }
